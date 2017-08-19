@@ -1,9 +1,11 @@
 #!/bin/bash
-echo -e "Are hungry?\n YES or NO\n"
-read VAL01
-if [ $VAL01 = ["YES"||"yes"] ];
+echo -e "Hello, give me an answer pls.\nAre you hungry\tYES or NO";
+read VALUE
+if [ $VALUE="YES" ];
 	then
-		echo "Make a meal pls."
+		echo "Make some meal pls.";
 else
-	echo "Continue working"
+	echo "Continue working pls.";
 fi
+
+
