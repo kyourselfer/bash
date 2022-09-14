@@ -1,13 +1,15 @@
-#!/usr/bin/bash
+#!/bin/bash
 CurrentTime=$(date +"%F_%z_%T" | tr -d [=:=][=-=][=+=])
 CurrentDate=$(date +"%F" | tr -d [=:=][=-=][=+=])
 
-cd /home/asmgtuusr/cleanup-LogsOfDocker-everyday/
+mkdir -p "$HOME/cleanup-LogsOfDocker-everyday/"
+WORKDIR="$HOME/cleanup-LogsOfDocker-everyday/"
+cd "$WORKDIR"
 
-for HOST in vasmgtu01 vasmgtu02 vasmgtu03 vasmgtu04 vasmgtu05 vasmgtu06
+for HOST in k8sw-01r k8sw-02r k8sw-03r
 do
-        echo $CurrentTime >> $0.$CurrentDate.log
-        ssh -t $HOST 'sudo find /var/lib/docker/containers/ -type f -name "*.log" -size +1G  -exec ls -lht {} +' >> $0.$CurrentDate.log
-        ssh -t $HOST 'sudo find /var/lib/docker/containers/ -type f -name "*.log" -size +1G  -exec truncate -s 0 {} +' >> $0.$CurrentDate.log
-        echo $CurrentTime >> $0.$CurrentDate.log
+        echo $CurrentTime >> "$WORKDIR/$CurrentDate.log"
+        ssh -t $HOST 'hostname; date; sudo find /var/lib/docker/containers/ -type f -name "*.log" -size +1G  -exec ls -lht {} +' >> "$WORKDIR/$CurrentDate.log"
+        ssh -t $HOST 'hostname; date; sudo find /var/lib/docker/containers/ -type f -name "*.log" -size +1G  -exec truncate -s 0 {} +' >> "$WORKDIR/$CurrentDate.log"
+        echo $CurrentTime >> "$WORKDIR/$CurrentDate.log"
 done
